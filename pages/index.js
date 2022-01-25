@@ -87,7 +87,7 @@ export default function PaginaInicial() {
               onChange={(event) => {
                 
                 const valor = event.target.value;
-                setUsername(valor)
+                username = valor;
               }}
             
               textFieldColors={{
