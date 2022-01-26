@@ -3,7 +3,19 @@ import appConfig from '../config.json';
 import React from 'react';
 import { useRouter } from 'next/router'
 
+function checkUser(string) {
+  if (string.length >= 2){
+    return string;
+  }
+  return '';
+}
 
+async function locationGitHub(user) {
+  const url = `https://api.github.com/users/${user}`
+  const { location } = await fetch(url).then((response) => response.json());
+  console.log(location);
+  return location;
+}
 
 function Titulo(props) {
   const Tag = props.tag || 'h1';
@@ -34,6 +46,8 @@ function Titulo(props) {
 // }
 // export default HomePage
 
+
+
 export default function PaginaInicial() {
   /* const username = 'omariosouto'; */
   const [username, setUsername] = React.useState('eduardobazler');
@@ -44,8 +58,8 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+          /* backgroundColor: appConfig.theme.colors.primary[500], */
+          backgroundImage: 'url(https://cdn.pixabay.com/photo/2017/05/11/08/37/universe-2303321_960_720.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -87,7 +101,8 @@ export default function PaginaInicial() {
               onChange={(event) => {
                 
                 const valor = event.target.value;
-                username = valor;
+                console.log(valor);
+                setUsername(valor)
               }}
             
               textFieldColors={{
@@ -110,6 +125,11 @@ export default function PaginaInicial() {
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
             />
+            <Box styleSheet={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px', marginTop: '20px',
+            }}>{}
+            </Box>
           </Box>
           {/* Formulário */}
 
@@ -135,7 +155,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://github.com/${username}.png`}
+              src={`https://github.com/${checkUser(username)}.png`}
             />
             <Text
               variant="body4"
